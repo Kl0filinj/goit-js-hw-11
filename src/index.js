@@ -7,6 +7,7 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 
 let page = 1;
 let totalPages;
+let t;
 
 const refs = {
   searchForm: document.querySelector('.search-form'),
@@ -52,9 +53,9 @@ function loadNewPictures() {
       'beforeend',
       buildCards(data.data.hits)
     );
+    const { height: cardHeight } =
+      refs.galleryContainer.firstElementChild.getBoundingClientRect();
     setTimeout(() => {
-      const { height: cardHeight } =
-        refs.galleryContainer.firstElementChild.getBoundingClientRect();
       window.scrollBy({
         left: 0,
         top: cardHeight * 2,
@@ -70,7 +71,7 @@ function buildCards(pictures) {
     .map(
       picture => `
   <div class="photo-card">
-  <a href='${picture.largeImageURL}'><img src="${picture.webformatURL}" alt="${picture.tags}" loading="lazy"/></a>
+  <a href='${picture.largeImageURL}'><img src="${picture.webformatURL}" alt="${picture.tags}" loading="lazy" width=307 height=205/></a>
   <div class="info">
     <p class="info-item">
       <b>Likes</b>
