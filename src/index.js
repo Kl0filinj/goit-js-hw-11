@@ -7,7 +7,6 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 
 let page = 1;
 let totalPages;
-let t;
 
 const refs = {
   searchForm: document.querySelector('.search-form'),
@@ -53,17 +52,21 @@ function loadNewPictures() {
       'beforeend',
       buildCards(data.data.hits)
     );
-    const { height: cardHeight } =
-      refs.galleryContainer.firstElementChild.getBoundingClientRect();
-    setTimeout(() => {
-      window.scrollBy({
-        left: 0,
-        top: cardHeight * 2,
-        behavior: 'smooth',
-      });
-    }, 550);
+    smoothScroll();
     simpleGallery.refresh();
   });
+}
+
+function smoothScroll() {
+  const { height: cardHeight } =
+    refs.galleryContainer.firstElementChild.getBoundingClientRect();
+  setTimeout(() => {
+    window.scrollBy({
+      left: 0,
+      top: cardHeight * 2,
+      behavior: 'smooth',
+    });
+  }, 550);
 }
 
 function buildCards(pictures) {
