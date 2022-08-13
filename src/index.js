@@ -20,7 +20,6 @@ function onFormSubmited(event) {
   refs.galleryContainer.innerHTML = '';
   page = 1;
   loadNewPictures();
-  refs.loadMoreBtn.style.display = 'block';
 }
 
 function onLoadMore() {
@@ -32,13 +31,19 @@ function loadNewPictures() {
   const inputValue = refs.searchInput.value.trim();
   fetchPicture(inputValue, page).then(data => {
     totalPages = data.totalHits / 40;
+    refs.loadMoreBtn.style.display = 'block';
 
-    if (totalPages - page >= -1 && totalPages - page <= 0) {
+    if (
+      totalPages - page >= -1 &&
+      totalPages - page <= 0 &&
+      data.hits.length !== 0
+    ) {
       refs.loadMoreBtn.style.display = 'none';
       Notiflix.Notify.warning(
         'We are sorry, but you have reached the end of search results.'
       );
     } else if (data.hits.length === 0) {
+      refs.loadMoreBtn.style.display = 'none';
       Notiflix.Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
       );
